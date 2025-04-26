@@ -2,7 +2,14 @@ import css from "./Contact.module.css";
 import { GrUserManager } from "react-icons/gr";
 import { MdOutlineContactPhone } from "react-icons/md";
 
-const Contact = ({ item, onDelete }) => {
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../redux/contactsSlice";
+
+const Contact = ({ item }) => {
+  const dispatch = useDispatch();
+  const onDelete = () => {
+    dispatch(deleteContact(item.id));
+  };
   return (
     <>
       <li className={css.contactItem}>
@@ -21,7 +28,7 @@ const Contact = ({ item, onDelete }) => {
           <button
             type="button"
             className={css.buttonContactItem}
-            onClick={() => onDelete(item.id)}
+            onClick={onDelete}
           >
             Delete
           </button>

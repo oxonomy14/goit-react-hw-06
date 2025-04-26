@@ -1,8 +1,17 @@
 import Contact from "../Contact/Contact";
 import css from "./ContactList.module.css";
 import { RiContactsBookLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
-const ContactList = ({ contact, onDelete }) => {
+const ContactList = () => {
+  const contacts = useSelector((state) => state.contactList.contacts.items);
+  const filter = useSelector((state) => state.filters.name);
+
+  // Фільтрація контактів по імені
+  const filteredContacts = contacts.filter((item) =>
+    item.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
   return (
     <>
       <div className={css.wrapperContactList}>
@@ -11,8 +20,8 @@ const ContactList = ({ contact, onDelete }) => {
           My Contacts List
         </h2>
         <ul className={css.contactList}>
-          {contact.map((item) => (
-            <Contact key={item.id} item={item} onDelete={onDelete} />
+          {filteredContacts.map((item) => (
+            <Contact key={item.id} item={item} />
           ))}
         </ul>
       </div>
